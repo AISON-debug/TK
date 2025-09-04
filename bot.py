@@ -1,4 +1,3 @@
-import os
 import logging
 from typing import List, Tuple
 
@@ -12,6 +11,7 @@ logging.basicConfig(level=logging.INFO)
 user_decks: dict[int, str] = {}
 
 ANKI_CONNECT_URL = "http://localhost:8765"
+TELEGRAM_TOKEN = "YOUR_TELEGRAM_BOT_TOKEN"
 
 
 def get_deck_names() -> List[str]:
@@ -104,9 +104,9 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
 
 
 def main() -> None:
-    token = os.getenv("TELEGRAM_TOKEN")
-    if not token:
-        raise RuntimeError("Please set TELEGRAM_TOKEN environment variable")
+    token = TELEGRAM_TOKEN
+    if not token or token == "YOUR_TELEGRAM_BOT_TOKEN":
+        raise RuntimeError("Please set TELEGRAM_TOKEN in bot.py")
 
     application = Application.builder().token(token).build()
     application.add_handler(CommandHandler("start", start))
